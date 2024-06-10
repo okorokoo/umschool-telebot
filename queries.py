@@ -1,15 +1,6 @@
 from db import conn, cursor
 
 
-def set_reg_state_true(user_id: int):
-    cursor.execute(f'''
-        UPDATE users
-        SET reg_state = 1
-        WHERE user_id = {user_id}
-        ''')
-    conn.commit()
-
-
 def is_user_exists(user_id: int) -> bool:
     try:
         cursor.execute('''
@@ -35,10 +26,10 @@ def store_user(user_id: int, user_first_name: str, user_last_name: str, user_pas
 
         conn.commit()
 
+        return True
+
     except:
         return False
-
-    return True
 
 
 def get_hash(user_id: int) -> str:
