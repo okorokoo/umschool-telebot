@@ -97,19 +97,6 @@ def view_all_scores(user_id):
     return scores
 
 
-def view_scores_by_subject(user_id, subject_id):
-    cursor.execute('''
-        SELECT s.subject_name, us.score 
-        FROM user_subjects us
-        JOIN subjects s ON us.subject_id = s.subject_id
-        WHERE us.user_id = ? AND us.subject_id = ?
-    ''', (user_id, subject_id))
-
-    scores = cursor.fetchall()
-
-    return scores
-
-
 def get_subject_id_by_name(subject_name: str) -> int:
     cursor.execute(f'''
         SELECT subject_id
