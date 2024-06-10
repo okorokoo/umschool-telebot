@@ -44,3 +44,11 @@ help_message = f'''
 
 /logout - выйти из системы
 '''
+
+
+def start_message(first_name: str) -> str:
+    start_message = (f"Привет, {first_name}!\nЯ бот для добавления и просмотра твоих результатов ЕГЭ.\nЗарегистрируйся "
+                     f"<b>/register</b> или войди <b>/login</b>, чтобы начать работу с ботом. Или выбери <b>/help</b> "
+                     f"чтобы ознакомиться с командами.")
+
+    return start_message
