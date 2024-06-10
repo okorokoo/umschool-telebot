@@ -3,7 +3,7 @@ from bot import bot
 import atexit
 import auth
 import db
-from constants import SUBJECTS, COMMANDS, NAME_PATTERN, help_message
+from constants import SUBJECTS, COMMANDS, NAME_PATTERN, help_message, start_message
 import queries
 
 from werkzeug.security import generate_password_hash
@@ -15,9 +15,9 @@ db.create_db()
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id,
-                     f"Привет, {message.from_user.first_name}!\nЯ бот для добавления и просмотра твоих результатов ЕГЭ.\nЗарегистрируйся <b>/register</b> или войди <b>/login</b>, чтобы начать работу с ботом. Или выбери <b>/help</b> чтобы ознакомиться с командами.",
-                     parse_mode='html')
+    user_first_name = message.from_user.first_name
+
+    bot.send_message(message.chat.id, start_message(user_first_name), parse_mode='html')
 
 
 @bot.message_handler(commands=['help'])
