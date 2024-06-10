@@ -1,25 +1,8 @@
 import sqlite3
+from constants import SUBJECTS
 
-conn = sqlite3.connect('users.db', check_same_thread=False)
+conn = sqlite3.connect('database.db', check_same_thread=False)
 cursor = conn.cursor()
-
-SUBJECTS = [
-    "русский язык",
-    "математика",
-    "физика",
-    "химия",
-    "история",
-    "обществознание",
-    "икт",
-    "биология",
-    "география",
-    "английский язык",
-    "немецкий язык",
-    "французский язык",
-    "испанский язык",
-    "китайский язык",
-    "литература"
-]
 
 
 def create_db():
