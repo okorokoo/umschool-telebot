@@ -1,11 +1,9 @@
 from telebot import types
-
 from bot import bot
-import re
 import atexit
 import auth
 import db
-from db import SUBJECTS
+from constants import SUBJECTS, COMMANDS, NAME_PATTERN, help_message
 import queries
 
 from werkzeug.security import generate_password_hash
@@ -13,17 +11,6 @@ from werkzeug.security import check_password_hash
 
 
 db.create_db()
-
-NAME_PATTERN = re.compile(r'^[A-Za-zА-Яа-яЁё]+\s[A-Za-zА-Яа-яЁё]+$')
-
-COMMANDS = {
-    'Добавить результаты': '/enter_scores',
-    'Удалить результаты': '/delete_scores',
-    'Просмотреть результаты': '/view_scores',
-    'Войти': '/login',
-    'Выйти из системы': '/logout',
-    'Помощь': '/help',
-}
 
 
 @bot.message_handler(commands=['start'])
@@ -37,21 +24,7 @@ def start(message):
 def help(message):
     markup = create_commands_keyboard()
 
-    bot.send_message(message.chat.id,
-                     f"Я бот для добавления и просмотра твоих результатов ЕГЭ. Выбери команду для работы с ботом.\n"
-                     f"""
-/register - зарегистрировать пользователя
-
-/login - войти в аккаунт
-
-/enter_scores - ввести результаты
-
-/view_scores - посмотреть результаты
-
-/delete_scores - удалить результаты
-
-/logout - выйти из системы""",
-                     parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, help_message, parse_mode='html', reply_markup=markup)
 
 
 @bot.message_handler(commands=['register'])
@@ -272,13 +245,6 @@ def create_commands_keyboard():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     for command in COMMANDS:
         markup.add(types.KeyboardButton(command))
-    return markup
-
-
-def create_login_button():
-    markup = types.InlineKeyboardMarkup()
-    login_button = types.InlineKeyboardButton('Войти', callback_data='login')
-    markup.add(login_button)
     return markup
 
 
